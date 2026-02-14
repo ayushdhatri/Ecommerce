@@ -9,3 +9,5 @@
 
 -> Differentate into multiple component, and 
    divide it in such a way that reusable component can be used at multiple places.
+
+#UPdated the git
