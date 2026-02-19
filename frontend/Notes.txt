@@ -4,10 +4,11 @@
 2) Material UI
 3) React Icons
 4) React hot-toast
+5) Headless UI(for product Modal)
 
 #First we will design Product Store Front
 
 -> Differentate into multiple component, and 
    divide it in such a way that reusable component can be used at multiple places.
 
-#UPdated the git
+#Updated the git
