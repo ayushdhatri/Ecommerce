@@ -6,7 +6,7 @@ export const fetchProducts = () => async(dispatch) =>{
         const { data } = await api.get(`/public/products`);
         dispatch({
             type : "FETCH_PRODUCTS",
-            paylod : data.content,
+            payload : data.content,
             pageNumber : data.pageNumber,
             pagesize : data.pageSize,
             totalElemnts : data.totalElements,

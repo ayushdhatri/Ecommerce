@@ -1,5 +1,5 @@
 const initialState = {
-    product: null,
+    products: [],
     categories : null,
     pagination : {}
 }
@@ -25,3 +25,5 @@ export const productReducer = (state = initialState, action) =>{
             return state
     }
 };
+
+export default productReducer;
