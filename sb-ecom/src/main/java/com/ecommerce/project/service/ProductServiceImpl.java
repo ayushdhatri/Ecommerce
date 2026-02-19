@@ -32,9 +32,13 @@ public class ProductServiceImpl implements ProductService{
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
     private final ProductRepository productRepository;
-    private ImageStorageStrategy imageStorageStrategy;
+    private final ImageStorageStrategy imageStorageStrategy;
     @Value("${project.image}")
     private String path;
+
+    @Value("${image.base.url}")
+    private String imageBaseUrl;
+
 
     public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, ModelMapper modelMapper){
         this.productRepository = productRepository;
@@ -78,7 +82,9 @@ public class ProductServiceImpl implements ProductService{
         Page<Product> productPage = productRepository.findAll(pageDetails);
       List<Product> savedProduct = productPage.getContent();
       List<ProductDTO> savedProductDTO = savedProduct.stream().map((product) -> {
-          return modelMapper.map(product, ProductDTO.class);
+        ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+        productDTO.setImage(constructImageUrl(product.getImage()));
+        return productDTO;
       }).toList();
       ProductResponse productResponse = new ProductResponse();
       productResponse.setContent(savedProductDTO);
@@ -87,6 +93,10 @@ public class ProductServiceImpl implements ProductService{
       productResponse.setTotalElements(productPage.getTotalElements());
       productResponse.setLastPage(productPage.isLast());
       return productResponse;
+    }
+
+    private String constructImageUrl(String imageName) {
+        return imageBaseUrl.endsWith("/") ? imageBaseUrl + imageName : imageBaseUrl + "/" + imageName;
     }
 
     @Override
@@ -148,28 +158,27 @@ public class ProductServiceImpl implements ProductService{
         return modelMapper.map(savedProduct, ProductDTO.class);
     }
 
-    @Override
     public ProductDTO updateProductImage(Long productId, MultipartFile image) throws IOException {
-        // Get the productId from DB
+
         Product productFromDB = productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product", "ProductId", productId));
-        // Upload image to server
-        // Get the file name of the uploaded image
-        // set the path of image in Image request DTO
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Product", "ProductId", productId)
+                );
+
         ImageUploadDTO imageUploadDTO = new ImageUploadDTO();
         imageUploadDTO.setFile(image);
-        imageUploadDTO.setFileName(image.getOriginalFilename());
         imageUploadDTO.setContentType(image.getContentType());
-        imageUploadDTO.setPath(path);  // where you want to upload
-
+        imageUploadDTO.setPath(path); // e.g. "uploads"
 
         StoredImage storedImage = imageStorageStrategy.uploadImage(imageUploadDTO);
 
-        // updating the new file to the product
-        Product updateProduct = productRepository.save(productFromDB);
-        // return DTO after mapping product to DTO
-        return modelMapper.map(updateProduct, ProductDTO.class);
+        // 🔥 MOST IMPORTANT LINE (YOU MISSED THIS)
+        productFromDB.setImage(storedImage.getFilePath());
 
+        Product updatedProduct = productRepository.save(productFromDB);
+
+        return modelMapper.map(updatedProduct, ProductDTO.class);
     }
+
 
 }

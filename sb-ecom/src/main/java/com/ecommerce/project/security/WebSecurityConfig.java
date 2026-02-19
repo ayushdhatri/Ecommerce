@@ -54,7 +54,7 @@ public class WebSecurityConfig {
         http.headers(headers -> headers
                 .frameOptions(frame -> frame.sameOrigin())
         );
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+        http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -68,6 +68,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/test/**").permitAll()
                                 .requestMatchers("/h2-console/**").permitAll()
                                 .requestMatchers("/api/public/**").permitAll()
+                                .requestMatchers("/images/**").permitAll()
                                 .anyRequest().authenticated());
 
                 http.authenticationProvider(authenticationProvider());

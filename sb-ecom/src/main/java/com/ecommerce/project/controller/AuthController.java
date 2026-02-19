@@ -28,12 +28,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
@@ -105,23 +107,27 @@ public class AuthController {
             roles.add(userRole);
         }
         else{
-           strRoles.forEach(role -> {
-               switch (role){
-                   case "admin" :
-                       Role adminRole = roleRepository.findByRoleName(AppRole.ROLE_ADMIN)
-                               .orElseThrow(() -> new RuntimeException("Error : Role is not found"));
-                       break;
-                   case "seller" :
-                       Role sellerRole = roleRepository.findByRoleName(AppRole.ROLE_SELLER)
-                               .orElseThrow(()-> new RuntimeException("Error : Role is not found"));
-                       break;
-
-                   default:
-                       Role userRole = roleRepository.findByRoleName(AppRole.ROLE_USER)
-                               .orElseThrow(()-> new RuntimeException("Error : Role is not found"));
+            strRoles.forEach(role -> {
+                switch (role.toLowerCase()) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByRoleName(AppRole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role not found"));
+                        roles.add(adminRole);
                         break;
-               }
-           });
+
+                    case "seller":
+                        Role sellerRole = roleRepository.findByRoleName(AppRole.ROLE_SELLER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role not found"));
+                        roles.add(sellerRole);
+                        break;
+
+                    default:
+                        Role userRole = roleRepository.findByRoleName(AppRole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role not found"));
+                        roles.add(userRole);
+                }
+            });
+
 
 
         }
