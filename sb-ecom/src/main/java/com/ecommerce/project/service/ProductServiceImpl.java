@@ -121,8 +121,6 @@ public class ProductServiceImpl implements ProductService{
         productResponse.setTotalElements(productPage.getTotalElements());
         productResponse.setLastPage(productPage.isLast());
         return productResponse;
-
-
     }
 
     @Override
