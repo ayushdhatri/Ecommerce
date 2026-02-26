@@ -7,9 +7,22 @@ import java.util.List;
 public class CategoryResponse {
     private List<CategoryDTO> content;
     public Integer pageNumber;
-    public Integer pagesize;
+    public Integer pageSize;
     public Long totalElements;
     public Integer totalPages;
+
+    public List<CategoryDTO> getContent() {
+        return content;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
     public boolean lastPage;
 
     public void setContent(List<CategoryDTO>content){
@@ -24,13 +37,7 @@ public class CategoryResponse {
         this.pageNumber = pageNumber;
     }
 
-    public Integer getPagesize() {
-        return pagesize;
-    }
 
-    public void setPagesize(Integer pagesize) {
-        this.pagesize = pagesize;
-    }
 
     public Long getTotalElements() {
         return totalElements;

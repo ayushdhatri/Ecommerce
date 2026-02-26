@@ -76,7 +76,6 @@ public class ProductController {
                                                          @RequestParam("image")MultipartFile image) throws IOException {
        ProductDTO productDTO =  productService.updateProductImage(productId, image);
        return new ResponseEntity<ProductDTO>(productDTO, HttpStatus.OK);
-
     }
 
 }

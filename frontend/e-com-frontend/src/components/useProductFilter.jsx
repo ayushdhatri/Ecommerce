@@ -1,6 +1,7 @@
 import {useEffect} from 'react';{}
 import { useDispatch} from 'react-redux';
 import {useSearchParams} from 'react-router-dom';
+import fetchProduct from '../store/actions/index'
 const useProductFilter = ()=>{
     const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
@@ -9,15 +10,13 @@ const useProductFilter = ()=>{
         const params = new URLSearchParams();
         const currentPage = searchParams.get("page")
             ? Number(searchParams.get("page")) : 1;
-        params.set("pageNumber", currentPage);
+        params.set("pageNumber", currentPage-1);
 
-        const sortOrder = searchParams.get("sortby") || "asc";
+        const sortOrder = searchParams.get("sortBy") || "asc";
         const categoryParams = searchParams.get("category") || null;
         const keyword = searchParams.get("keyword") || null;
         params.set("sortBy", "price");
-    
         params.set("sortOrder", sortOrder);
-
         if(categoryParams){
             params.set("category", categoryParams);
         }
@@ -27,6 +26,8 @@ const useProductFilter = ()=>{
 
         const queryString = params.toString();
         console.log(queryString);
+        dispatch(fetchProduct(queryString));
+        
     },[searchParams])
 }
 

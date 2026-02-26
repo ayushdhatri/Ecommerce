@@ -57,8 +57,4 @@ public class ProductResponse {
         this.content = content;
     }
 
-
-    public void setPagesize(int i) {
-        this.pageSize = i;
-    }
 }
