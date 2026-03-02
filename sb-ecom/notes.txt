@@ -186,3 +186,25 @@ From now onwards will start with custom authentication for our product
 
 
 Start implementating Order and Payments in our application
+
+
+#Let Start Designing HomePage and Navigation
+1) There will one nav bar(Home Product About Contact)
+2) Few Products which will at top featured.
+3) One slider showing different category
+4) When you click any product you will go to that product Page. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
