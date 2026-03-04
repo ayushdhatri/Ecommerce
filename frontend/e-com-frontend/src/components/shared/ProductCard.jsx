@@ -11,14 +11,17 @@ const ProductCard = ({
   price,
   discount,
   specialPrice,
+  about = false,
 }) => {
   const [openProductdViewModal, setOpenProductViewModal] = useState(false);
   const btnLoader = false;
   const [selectedViewProduct, setSelectedViewProduct] = useState("");
   const isAvailable = quantity && Number(quantity) > 0;
   const handleProductView = (product) => {
-    setSelectedViewProduct(product);
-    setOpenProductViewModal(true);
+    if (!about) {
+      setSelectedViewProduct(product);
+      setOpenProductViewModal(true);
+    }
   };
   return (
     <>
@@ -65,7 +68,8 @@ const ProductCard = ({
           <div className="min-h-20 max-h-20">
             <p>{description}</p>
           </div>
-          <div>
+          { !about && (
+            <div className="flex items-center justify-between">
             {specialPrice ? (
               <div className="flex flex-col">
                 <span className="text-gray-400 line-through">
@@ -84,7 +88,7 @@ const ProductCard = ({
             )}
 
             <button
-                disabled={!isAvailable || btnLoader}
+              disabled={!isAvailable || btnLoader}
               className={`bg-blue-500 ${
                 isAvailable ? "opacity-100 hover:bg-blue-600" : "opacity-80"
               }
@@ -94,12 +98,14 @@ const ProductCard = ({
               {isAvailable ? "Add to Cart" : "Stock Out"}
             </button>
           </div>
+          ) }
+          
         </div>
         <ProductViewModal
-            open={openProductdViewModal}
-            setOpen={setOpenProductViewModal}
-            product={selectedViewProduct}
-            isAvailable={isAvailable}
+          open={openProductdViewModal}
+          setOpen={setOpenProductViewModal}
+          product={selectedViewProduct}
+          isAvailable={isAvailable}
         />
       </div>
     </>
