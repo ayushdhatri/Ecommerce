@@ -1,7 +1,7 @@
 import {useEffect} from 'react';{}
 import { useDispatch} from 'react-redux';
 import {useSearchParams} from 'react-router-dom';
-import fetchProduct from '../store/actions/index'
+import {fetchProducts} from '../store/actions/index'
 const useProductFilter = ()=>{
     const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const useProductFilter = ()=>{
 
         const queryString = params.toString();
         console.log(queryString);
-        dispatch(fetchProduct(queryString));
+        dispatch(fetchProducts(queryString));
         
     },[searchParams])
 }

@@ -1,7 +1,7 @@
 import HeroBanner from "./HeroBanner";
-import Products from "../products/Products";
+import ProductCard from "../shared/ProductCard";
 import { useSelector, useDispatch } from "react-redux";
-import fetchProduct from "../../store/actions/index";
+import {fetchProducts} from "../../store/actions/index";
 import { useEffect } from "react";
 import { FaExclamationTriangle } from "react-icons/fa";
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
   });
 
   useEffect(() => {
-    dispatch(fetchProduct());
+    dispatch(fetchProducts());
   }, [dispatch]);
 
   return (
@@ -42,7 +42,7 @@ const Home = () => {
           <div className="pb-6 pt-14 grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid">
             {products &&
               products.map((item, i) => {
-                <Products key={i} {...item} />;
+                <ProductCard key={i} {...item} />;
               })}
           </div>
         )}
