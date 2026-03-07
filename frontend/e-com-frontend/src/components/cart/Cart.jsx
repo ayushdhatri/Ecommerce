@@ -15,6 +15,7 @@ const Cart = () => {
       : Number(curr.price);
     return acc + itemPrice * Number(curr?.quantity);
   }, 0);
+  const {user} = useSelector((state) => state.auth);
 
   if(!cart || cart.length === 0)return <CartEmpty />
   return (

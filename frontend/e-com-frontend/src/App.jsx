@@ -11,6 +11,7 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Cart from './components/cart/Cart';
 import { Toaster } from "react-hot-toast";
+import {Login} from './components/auth/Login';
 function App() {
   const [count, setCount] = useState(0)
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path = '/about' element={<About/>} />
         <Route path = '/contact' element={<Contact/>} />
         <Route path = '/cart' element={<Cart/>}/>
+        <Route path = '/login' element={<Login/>}/>
         
       </Routes>
      
