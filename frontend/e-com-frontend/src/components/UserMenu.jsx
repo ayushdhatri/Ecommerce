@@ -5,6 +5,7 @@ import { FaShoppingCart, FaUserShield } from "react-icons/fa";
 import { IoExitOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import {BackDrop} from '../components/BackDrop';
 
 export const UserMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -61,6 +62,7 @@ export const UserMenu = () => {
           </MenuItem>
         </Link>
       </Menu>
+      {open && <BackDrop /> }
     </div>
   );
 };
