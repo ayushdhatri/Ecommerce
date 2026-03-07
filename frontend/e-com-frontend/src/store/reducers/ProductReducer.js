@@ -20,9 +20,9 @@ export const productReducer = (state = initialState, action) =>{
                 },
 
             };
-        
-            default : 
+        default : 
             return state
+
     }
 };
 
