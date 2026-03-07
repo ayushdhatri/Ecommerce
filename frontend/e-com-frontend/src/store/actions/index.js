@@ -53,7 +53,14 @@ export const addToCart = (data, qty = 1, toast) =>
 
 export const increaseCartQuantity = (data, toast, currentQuantity, setCurrentQuantity) =>
     (dispatch, getState) =>{
-        const { products } = getState().products;
+       let{ products } = getState().products;
+        if(products === null || products === undefined || products.length === 0){
+            dispatch(fetchProducts());
+            console.log("calling fetch product if it is null")
+            const productStore =  getState().products;
+            products = productStore.products;
+        }
+        
         console.log(products);
         const getProduct = products.find((item)=> item.productId === data.productId);
         console.log(getProduct);
@@ -71,11 +78,8 @@ export const increaseCartQuantity = (data, toast, currentQuantity, setCurrentQua
         else{
             toast.error("Quantity Reached to Limit");
         }
-
-
-
-
 }
+
 
 export default {fetchProducts , addToCart, increaseCartQuantity};
 

@@ -28,6 +28,9 @@ const ItemContent = ({
       ),
     );
   };
+  const handleQtyDecrease = (cartItems) =>{
+    
+  }
   return (
     <div className="grid md:grid-cols-5 grid-cols-4 md:text-md text-sm gap-4 items-center border border-slate-200 rounded-md lg:px-4 py-4 p-2">
       <div className="col-span-2 md:col-span-2 justify-self-start flex flex-col gap-2">

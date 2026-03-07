@@ -9,7 +9,7 @@ const SetQuantity = ({
     <div className="flex gap-8 items-center">
       {cardCounter ? null : <div className="font-semibold">Quantity</div>}
       <div className="flex md:flex-row flex-col gap-4 items-center lg:text lg:text-[22px] text-sm">
-        <button disabled={quantity <= 1} className={btnStyles}>
+        <button disabled={quantity <= 1} className={btnStyles} onClick={handleQtyDecrease}>
           {" "}
           -
         </button>
