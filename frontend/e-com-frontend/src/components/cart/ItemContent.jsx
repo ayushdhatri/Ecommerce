@@ -7,6 +7,7 @@ import {
   decreaseCartQuantity,
   removeFromCart
 } from "../../store/actions/index";
+import formatPrice from '../../utils/formatPrice';
 
 import { toast } from "react-hot-toast";
 const ItemContent = ({
@@ -85,7 +86,7 @@ const ItemContent = ({
       </div>
 
       <div className="justify-self-center lg:text-[17px] text-sm text-slate-700 font-semibold">
-        {Number(specialPrice)}
+        {formatPrice(Number(specialPrice))}
       </div>
       <div className="justify-self-center lg:text-[17px] text-sm text-slate-700 font-semibold">
         {
@@ -123,7 +124,7 @@ const ItemContent = ({
         }
       </div>
       <div className="justify-self-center lg:text-[17px] text-sm text-slate-700 font-semibold">
-        {Number(currentQuantity) * Number(specialPrice)}
+        {formatPrice(Number(currentQuantity) * Number(specialPrice))}
       </div>
     </div>
   );
