@@ -2,6 +2,7 @@ import { MdShoppingCart, MdArrowBack } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import ItemContent from "../cart/ItemContent";
 import CartEmpty from './CartEmpty';
+import priceFormat from '../../utils/formatPrice';
 
 import { Link } from "react-router-dom";
 const Cart = () => {
@@ -49,7 +50,7 @@ const Cart = () => {
         <div className="flex text-sm gap-1 flex-col">
           <div className="flex justify-between w-full md:text-lg text-sm font-semibold">
             <span>Subtotal</span>
-            <span>Rs-400</span>
+            <span>{priceFormat(newCart.totalPrice)}</span>
           </div>
           <p className="text-slate-500">
             Taxes and Shipping calculated at checkout
