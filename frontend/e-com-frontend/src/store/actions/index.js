@@ -107,6 +107,26 @@ export const removeFromCart = (data, toast) => (dispatch,getState) => {
     localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
 }
 
+export const authenticateSignInUser = (sendData,toast,reset,navigate,setLoader) => async (dispatch)=>{
+    try{
+        setLoader(true);
+        const {data} = await api.post('/auth/signin',sendData);
+        dispatch({type : "LOGIN_USER", payload : data});
+        localStorage.setItem("auth", JSON.stringify(data));
+        reset();
+        toast.success("Login Success");
+        navigate('/');
+    }
+    catch(err){
+        console.log(err);
+        toast.error(err.response.data.message || "Internal Server Error");
+    }
+    finally{
+        setLoader(false);
+    }
+
+}
+
 export default {fetchProducts , addToCart, increaseCartQuantity,decreaseCartQuantity};
 
 
