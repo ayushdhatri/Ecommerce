@@ -80,7 +80,27 @@ export const increaseCartQuantity = (data, toast, currentQuantity, setCurrentQua
         }
 }
 
+export const decreaseCartQuantity = (data, toast,currentQuantity, setCurrentQuantity) => 
+    (dispatch,getSate)=>{
+        const newQuantity = currentQuantity - 1;
+        if(newQuantity === 0){
+            toast.error("Quantity cannot be less than! Click on remove from cart");
+        }
+        else{
+            setCurrentQuantity(newQuantity);
+            dispatch({type:"ADD_CART",
+                payload : {...data,quantity : newQuantity}
+            });
+            localStorage.setItem("cartItems", JSON.stringify(getSate().carts.cart));
+            toast.success("Quantity Reduced");
+        }
 
-export default {fetchProducts , addToCart, increaseCartQuantity};
+
+
+
+}
+
+
+export default {fetchProducts , addToCart, increaseCartQuantity,decreaseCartQuantity};
 
 

@@ -2,7 +2,10 @@ import { useState } from "react";
 import { HiOutlineTrash } from "react-icons/hi2";
 import SetQuantity from "./SetQuantity";
 import { useDispatch } from "react-redux";
-import { increaseCartQuantity } from "../../store/actions/index";
+import {
+  increaseCartQuantity,
+  decreaseCartQuantity,
+} from "../../store/actions/index";
 
 import { toast } from "react-hot-toast";
 const ItemContent = ({
@@ -28,9 +31,18 @@ const ItemContent = ({
       ),
     );
   };
-  const handleQtyDecrease = (cartItems) =>{
-    
-  }
+  const handleQtyDecrease = (cartItems) => {
+    if (currentQuantity > 1) {
+      dispatch(
+        decreaseCartQuantity(
+          cartItems,
+          toast,
+          currentQuantity,
+          setCurrentQuantity,
+        ),
+      );
+    }
+  };
   return (
     <div className="grid md:grid-cols-5 grid-cols-4 md:text-md text-sm gap-4 items-center border border-slate-200 rounded-md lg:px-4 py-4 p-2">
       <div className="col-span-2 md:col-span-2 justify-self-start flex flex-col gap-2">
@@ -66,17 +78,34 @@ const ItemContent = ({
             quantity={currentQuantity}
             cardCounter={true}
             handleQtyIncrease={() => {
-              handleQtyIncrease({
-                image,
-                productName,
-                description,
-                specialPrice,
-                price,
-                productId,
-                quantity,
-              },toast,currentQuantity,setCurrentQuantity)
+              handleQtyIncrease(
+                {
+                  image,
+                  productName,
+                  description,
+                  specialPrice,
+                  price,
+                  productId,
+                  quantity,
+                },
+                toast,
+                currentQuantity,
+                setCurrentQuantity,
+              );
             }}
-            handleQtyDecrease={() => {}}
+            handleQtyDecrease={() => {
+              handleQtyDecrease(
+                {
+                  image,
+                  productName,
+                  description,
+                  specialPrice,
+                  price,
+                  productId,
+                  quantity,
+                }
+              );
+            }}
           />
         }
       </div>
