@@ -5,8 +5,8 @@ export const Spinners = () => {
     <div>
       <FidgetSpinner
         visible={true}
-        height="80"
-        width="80"
+        height="40"
+        width="40"
         ariaLabel="fidget-spinner-loading"
         wrapperStyle={{}}
         wrapperClass="fidget-spinner-wrapper"
