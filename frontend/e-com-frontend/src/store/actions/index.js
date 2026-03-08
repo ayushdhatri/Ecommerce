@@ -169,12 +169,14 @@ export const addUpdateUserAddress = (sendData,toast,addressId,setOpenAddressModa
     }
 }
 
-export const getUserAddresses = () => (dispatch, getState)=>{
+export const getUserAddresses = () => async(dispatch, getState)=>{
     try{
-    dispatch({type : "IS_FETChING"});
-    const { data }  = api.get('/addresses');
+    dispatch({type : "IS_FETCHING"});
+    console.log("fetching the user");
+    const { data }  = await api.get('/addresses');
+    console.log("Got the address from the backend" + data);
     dispatch({
-        type : USER_ADDRESS,
+        type : "USER_ADDRESS",
         payload : data
     });
     dispatch({type : "IS_SUCCESS"});
@@ -187,6 +189,6 @@ export const getUserAddresses = () => (dispatch, getState)=>{
     }
 
 }
-export default {fetchProducts , addToCart, increaseCartQuantity,decreaseCartQuantity,registerNewUser,addUpdateUserAddress, getUserAddresses};
+export default {fetchProducts , addToCart, increaseCartQuantity,decreaseCartQuantity,registerNewUser,addUpdateUserAddress};
 
 
