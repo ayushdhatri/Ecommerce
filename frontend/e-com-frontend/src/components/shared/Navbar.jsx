@@ -12,9 +12,6 @@ const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const {cart} = useSelector((state) => state.carts);
   const { user } = useSelector((state)=> state.auth);
-
-
-
   return (
     <div className="h-17.5 bg-custom-gradient text-white z-50 flex items-center sticky top-0">
       <div className="lg:px-14 cm:px-8 px-4 w-full flex justify-between">

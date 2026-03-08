@@ -69,7 +69,7 @@ export const Login = () => {
           </button>
           <p className="text-center text-sm text-slate-700 mt-6 ">
             Don't have an account?
-            <Link to='/signup' className="font-semibold underline hover:text-black">
+            <Link to='/register' className="font-semibold underline hover:text-black">
             <span> Signup</span></Link>
           </p>
         </div>
