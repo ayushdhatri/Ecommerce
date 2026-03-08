@@ -143,14 +143,32 @@ export const registerNewUser = (sendData,toast,reset,navigate,setLoader) => asyn
     }
 
 };
-export const logOutUser = (navigate,toast) => (dispatch) =>{
+export const logOutUser = (navigate,toast) => async (dispatch) =>{
     dispatch({type : "LOG_OUT"});
     localStorage.removeItem('auth');
     toast.success("Logout Successfully");
     navigate('/login');
+}
+
+export const addUpdateUserAddress = (sendData,toast,addressId,setOpenAddressModal) => async(dispatch,getState)=>{
+    console.log("Sending address post request");
+    const {user} = getState().auth;
+    dispatch({type : "BUTTON_LOADER"});
+    try{
+        const {data} = await api.post("/addresses", sendData);
+        console.log(data);
+        toast.success("Address saved Successfully");
+    }
+    catch(error){
+        toast.error(error?.response?.data?.message || "Internal Server Error");
+        dispatch({type:"IS_ERROR", payload : null})
+    }
+    finally{
+        setOpenAddressModal(false);
+    }
 
 
 }
-export default {fetchProducts , addToCart, increaseCartQuantity,decreaseCartQuantity,registerNewUser};
+export default {fetchProducts , addToCart, increaseCartQuantity,decreaseCartQuantity,registerNewUser,addUpdateUserAddress};
 
 

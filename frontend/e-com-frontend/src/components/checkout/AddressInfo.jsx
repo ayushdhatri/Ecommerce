@@ -10,9 +10,6 @@ const AddressInfo = () => {
     const addNewAddressHandler = ()=>{
         setSelectedAddres("");
         setOpenAddressModal(true);
-
-
-
     }
   const noAddressExist = true;
   const isLoading = true;
@@ -56,7 +53,10 @@ const AddressInfo = () => {
       <AddressInfoModal 
         open = {openAddressModal}
         setOpen={setOpenAddressModal} >
-            <AddAddressForm/>
+            <AddAddressForm 
+            address={selectedAddress} 
+            setOpenAddressModal = {setOpenAddressModal}
+            />
         </AddressInfoModal>
 
     </div>

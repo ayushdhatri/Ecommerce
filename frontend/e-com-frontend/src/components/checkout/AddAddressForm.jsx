@@ -7,7 +7,10 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FaAddressCard } from "react-icons/fa";
 import { useSelector } from "react-redux";
-const AddAddressForm = () => {
+import {addUpdateUserAddress} from '../../store/actions/index';
+import {toast} from 'react-hot-toast';
+import {Spinners} from '../shared/Spinners';
+const AddAddressForm = ({address,setOpenAddressModal}) => {
   const { btnLoader } = useSelector((state) => state.errors);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,6 +26,12 @@ const AddAddressForm = () => {
 
   const onSaveAddressHandler = async (data) => {
     console.log("Save Address Clicked");
+    dispatch(addUpdateUserAddress(
+        data,
+        toast,
+        address?.addressId,
+        setOpenAddressModal
+    ))
   };
 
   return (
@@ -37,7 +46,7 @@ const AddAddressForm = () => {
             message="*Building Name is required"
             label="Building"
             required
-            id="building"
+            id="buildingName"
             type="text"
             register={register}
             errors={errors}
@@ -82,6 +91,16 @@ const AddAddressForm = () => {
             register={register}
             errors={errors}
             placeholder="Enter Your Country"
+          />
+            <InputField
+            message="*State is required"
+            label="state"
+            required
+            id="state"
+            type="text"
+            register={register}
+            errors={errors}
+            placeholder="Enter Your State"
           />
           <button disabled={btnLoader} className=" text-white bg-custom-blue px-4 py-2" type="submit">
             {btnLoader ? (
