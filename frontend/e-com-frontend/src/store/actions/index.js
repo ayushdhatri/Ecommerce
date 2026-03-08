@@ -126,7 +126,23 @@ export const authenticateSignInUser = (sendData,toast,reset,navigate,setLoader) 
     }
 
 }
+export const registerNewUser = (sendData,toast,reset,navigate,setLoader) => async (dispatch)=>{
+    try{
+        setLoader(true);
+        const {data} = await api.post('/auth/signup',sendData);
+        reset();
+        toast.success(data?.message || "User Registered Successfully");
+        navigate('/login');
+    }
+    catch(err){
+        console.log(err);
+        toast.error(err.response.data.message || "Internal Server Error");
+    }
+    finally{
+        setLoader(false);
+    }
 
+}
 export default {fetchProducts , addToCart, increaseCartQuantity,decreaseCartQuantity};
 
 

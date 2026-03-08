@@ -1,12 +1,15 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
 import {useState} from 'react';
 import { FaUserPlus } from "react-icons/fa";
 import { InputField } from "../shared/InputField";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {toast} from 'react-hot-toast';
+import {registerNewUser} from '../../store/actions/index';
 export const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
   const {
     register,
@@ -17,9 +20,8 @@ export const Register = () => {
     mode: "onTouched",
   });
   const registerHanlder = async(data)=>{
-    console.log("Register Click");
-
-
+    console.log(data);
+    dispatch(registerNewUser(data,toast,reset,navigate, setLoader));
   }
 
   return (
@@ -72,7 +74,7 @@ export const Register = () => {
             className="bg-button-gradient flex gap-2 items-center justify-center font-semibold text-white w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-sm my-3"
             type="submit"
             >
-                {loader ? <>(Loading...)</> :   <>Login</> }
+                {loader ? <>(Loading...)</> :   <>Register</> }
          
           </button>
           <p className="text-center text-sm text-slate-700 mt-6 ">

@@ -14,7 +14,7 @@ public class SignupRequest {
     private String username;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(min = 11)
     @Email
     private String email;
 
