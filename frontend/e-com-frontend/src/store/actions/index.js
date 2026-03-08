@@ -167,9 +167,26 @@ export const addUpdateUserAddress = (sendData,toast,addressId,setOpenAddressModa
     finally{
         setOpenAddressModal(false);
     }
+}
 
+export const getUserAddresses = () => (dispatch, getState)=>{
+    try{
+    dispatch({type : "IS_FETChING"});
+    const { data }  = api.get('/addresses');
+    dispatch({
+        type : USER_ADDRESS,
+        payload : data
+    });
+    dispatch({type : "IS_SUCCESS"});
+    }
+    catch(error){
+        dispatch({
+            type : "IS_ERROR",
+            PAYLOAD : error?.response?.data?.message || "Failed to fetch user's address"
+        });
+    }
 
 }
-export default {fetchProducts , addToCart, increaseCartQuantity,decreaseCartQuantity,registerNewUser,addUpdateUserAddress};
+export default {fetchProducts , addToCart, increaseCartQuantity,decreaseCartQuantity,registerNewUser,addUpdateUserAddress, getUserAddresses};
 
 
