@@ -3,9 +3,10 @@ import {Stepper} from '@mui/material';
 import {useState} from 'react';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+import AddressInfo from './AddressInfo';
 
 export const Checkout = () => {
-    const [activeStep,setActiveState] = useState();
+    const [activeStep,setActiveState] = useState(0);
     const steps = [
         "Address",
         "Payment Method",
@@ -22,8 +23,11 @@ export const Checkout = () => {
             </Step>
             )
         })}
-
       </Stepper>
+        <div className='mt-5'>
+            {activeStep === 0 && <AddressInfo />}
+        </div>
+
     </div>
   )
 }
