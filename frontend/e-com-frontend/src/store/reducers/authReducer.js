@@ -10,11 +10,14 @@ export const authReducer = (state = initialState, action)=>{
                 ...state,
                 user : action.payload
             }
+        case "LOG_OUT" :
+            return {
+                ...state,
+                user : null,
+                address: []
+            }
         default : 
             return state;        
     }
-
-
-
 }
 export default authReducer;

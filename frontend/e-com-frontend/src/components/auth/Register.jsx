@@ -27,7 +27,7 @@ export const Register = () => {
   return (
     <div className="min-h-[calc(100vh-64px)] flex justify-center items-center">
       <form
-        onSubmit={handleSubmit(registerHanlder)}
+        onSubmit={()=>handleSubmit(registerHanlder)}
         className="sm:w-[450px] w-[360px] shadow-custom py-8 sm:px-8 px-4 rounded-md"
       >
         <div className="flex flex-col items-center justify-center space-y-4">

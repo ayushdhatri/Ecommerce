@@ -142,7 +142,15 @@ export const registerNewUser = (sendData,toast,reset,navigate,setLoader) => asyn
         setLoader(false);
     }
 
+};
+export const logOutUser = (navigate,toast) => (dispatch) =>{
+    dispatch({type : "LOG_OUT"});
+    localStorage.removeItem('auth');
+    toast.success("Logout Successfully");
+    navigate('/login');
+
+
 }
-export default {fetchProducts , addToCart, increaseCartQuantity,decreaseCartQuantity};
+export default {fetchProducts , addToCart, increaseCartQuantity,decreaseCartQuantity,registerNewUser};
 
 

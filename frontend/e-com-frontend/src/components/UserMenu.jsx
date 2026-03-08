@@ -6,7 +6,8 @@ import { IoExitOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {BackDrop} from '../components/BackDrop';
-
+import {logOutUser} from '../store/actions/index';
+import {toast} from 'react-hot-toast';
 export const UserMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -20,6 +21,9 @@ export const UserMenu = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const logOutHandler = () =>{
+    dispatch(logOutUser(navigate,toast));
+    }
 
   return (
     <div className="relative z-30">
@@ -56,7 +60,7 @@ export const UserMenu = () => {
 
         <Link >
           <MenuItem className="flex gap-2 bg-button-gradient items-center justify-center font-semibold text-white w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-sm my-3"
- onClick={handleClose}>
+ onClick={logOutHandler}>
             <FaShoppingCart className="text-xl" />
             <span className="font-semibold">Logout</span>
           </MenuItem>
