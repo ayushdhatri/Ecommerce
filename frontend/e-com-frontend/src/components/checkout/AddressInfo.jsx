@@ -1,37 +1,37 @@
 import React from "react";
 import Skeleton from "../shared/Skeleton";
-import {FaAddressBook} from 'react-icons/fa'
-import {useState} from 'react';
-import AddressInfoModal from './AddressInfoModal';
-import AddAddressForm from './AddAddressForm';
-import AddressList from './AddressList';
-import {useSelector} from 'react-redux';
-const AddressInfo = ({address}) => {
-    const [openAddressModal, setOpenAddressModal] = useState(false);
-    const [selectedAddress, setSelectedAddress] = useState("");
-    const addNewAddressHandler = ()=>{
-        setSelectedAddress("");
-        setOpenAddressModal(true);
-    }
-  const noAddressExist =  !address || address.length === 0;
-  const {isLoading, btnLoader} = useSelector((state)=> state.errors);
+import { FaAddressBook } from "react-icons/fa";
+import { useState } from "react";
+import AddressInfoModal from "./AddressInfoModal";
+import AddAddressForm from "./AddAddressForm";
+import AddressList from "./AddressList";
+import { useSelector } from "react-redux";
+const AddressInfo = ({ address }) => {
+  const [openAddressModal, setOpenAddressModal] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState("");
+  const addNewAddressHandler = () => {
+    setSelectedAddress("");
+    setOpenAddressModal(true);
+  };
+  const noAddressExist = !address || address.length === 0;
+  const { isLoading, btnLoader } = useSelector((state) => state.errors);
   return (
     <div className="pt-4">
       {noAddressExist ? (
         <div className="p-6 rounded-lg max-w-md mx-auto flex flex-col items-center">
-            <FaAddressBook size={50} className='text-gray-500 mb-4' />
-             <h1 className="md-2 text-slate-900 text-center font-semibold text-2xl">
-              No Address Added Yet
-            </h1>
-            <p className="md-2 text-slate-400 text-center font-semibold my-4">
-                Please Add your address to complete purchase
-            </p>
-            <button className="px-4 py-2 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition-all"
-                onClick={addNewAddressHandler}
-            >
-                Add Address
-            </button>
-            
+          <FaAddressBook size={50} className="text-gray-500 mb-4" />
+          <h1 className="md-2 text-slate-900 text-center font-semibold text-2xl">
+            No Address Added Yet
+          </h1>
+          <p className="md-2 text-slate-400 text-center font-semibold my-4">
+            Please Add your address to complete purchase
+          </p>
+          <button
+            className="px-4 py-2 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition-all"
+            onClick={addNewAddressHandler}
+          >
+            Add Address
+          </button>
         </div>
       ) : (
         <div>
@@ -44,24 +44,36 @@ const AddressInfo = ({address}) => {
                 <Skeleton />
               </div>
             ) : (
-              <div className="space-y-4 pt-6">
-                  <AddressList addresses = {address} setSelectedAddress = {setSelectedAddress} openAddressModal = {setOpenAddressModal} />
-
+              <>
+                <div className="space-y-4 pt-6">
+                  <AddressList
+                    addresses={address}
+                    setSelectedAddress={setSelectedAddress}
+                    setOpenAddressModal={setOpenAddressModal}
+                  />
                 </div>
+                {address.length > 0 && (
+                  <div className="mt-4">
+                    <button
+                      onClick={addNewAddressHandler}
+                      className="px-4 py-2 bg-blue-600 text-white font-medium rounded-sm hover:bg-blue-700 transition-all"
+                    >
+                      Add More
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
       )}
 
-      <AddressInfoModal 
-        open = {openAddressModal}
-        setOpen={setOpenAddressModal} >
-            <AddAddressForm 
-            addresses={selectedAddress} 
-            setOpenAddressModal = {setOpenAddressModal}
-            />
-        </AddressInfoModal>
-
+      <AddressInfoModal open={openAddressModal} setOpen={setOpenAddressModal}>
+        <AddAddressForm
+          addresses={selectedAddress}
+          setOpenAddressModal={setOpenAddressModal}
+        />
+      </AddressInfoModal>
     </div>
   );
 };
