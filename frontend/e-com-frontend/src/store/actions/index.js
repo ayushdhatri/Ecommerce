@@ -210,6 +210,14 @@ export const deleteUserAddress =
     }
   };
 
+export const addPaymentMethod = (paymentMethod, toast)=>(dispatch)=>{
+    dispatch({type : "UPDATE_PAYMENT_METHOD",
+        payload : paymentMethod
+    });
+    toast.success("Payment Method Added Successfully");
+
+}
+
 export default {
   fetchProducts,
   addToCart,

@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { Button } from "@mui/material";
 import { toast } from "react-hot-toast";
 import Skeleton from '../shared/Skeleton';
+import PaymentMethod from './PaymentMethod';
 export const Checkout = () => {
   const [activeStep, setActiveState] = useState(0);
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ export const Checkout = () => {
       ) : (
         <div className="mt-5">
           {activeStep === 0 && <AddressInfo address={address} />}
+          {activeStep === 1 && <PaymentMethod />}
         </div>
       )}
 
