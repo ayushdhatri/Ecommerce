@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserAddresses } from "../../store/actions/index";
 import { useEffect } from "react";
 import { Button } from "@mui/material";
-import {toast} from 'react-hot-toast';
+import { toast } from "react-hot-toast";
+import Skeleton from '../shared/Skeleton';
 export const Checkout = () => {
   const [activeStep, setActiveState] = useState(0);
   const dispatch = useDispatch();
@@ -20,19 +21,18 @@ export const Checkout = () => {
   const paymentMethod = false;
   const handleBack = () => {
     setActiveState((prevStep) => prevStep - 1);
-
   };
-  const handleNext = ()=>{
-    if(activeStep === 0 && !selectedUserCheckoutAddress){
-       toast.error("Plese select checkout address before procedding");
-       return;
+  const handleNext = () => {
+    if (activeStep === 0 && !selectedUserCheckoutAddress) {
+      toast.error("Plese select checkout address before procedding");
+      return;
     }
-    if(activeStep === 1 && (!selectedUserCheckoutAddress || !paymentMethod)){
+    if (activeStep === 1 && (!selectedUserCheckoutAddress || !paymentMethod)) {
       toast.error("Please select Payment address before proceeding");
       return;
     }
     setActiveState((prevStep) => prevStep + 1);
-  }
+  };
   useEffect(() => {
     dispatch(getUserAddresses());
   }, [dispatch]);
@@ -47,9 +47,15 @@ export const Checkout = () => {
           );
         })}
       </Stepper>
-      <div className="mt-5">
-        {activeStep === 0 && <AddressInfo address={address} />}
-      </div>
+      {isLoading ? (
+        <div className="lg:w-[80%] mx-auto py-5">
+        <Skeleton />
+        </div>
+      ) : (
+        <div className="mt-5">
+          {activeStep === 0 && <AddressInfo address={address} />}
+        </div>
+      )}
 
       <div className="flex justify-between items-center px-4 fixed z-50 h-24 bottom-0 bg-white left-0 w-full py-4 border-slate-200">
         <Button
@@ -76,6 +82,8 @@ export const Checkout = () => {
           </Button>
         )}
       </div>
+
+      {errorMessage && <ErrorPage message={"Error Message Here"} />}
     </div>
   );
 };
