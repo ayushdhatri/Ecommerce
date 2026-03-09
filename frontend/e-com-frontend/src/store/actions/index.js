@@ -197,6 +197,7 @@ export const deleteUserAddress =
       console.log("Deleting the address from User");
       await api.delete(`/addresses/${addressId}`);
       dispatch(getUserAddresses());
+      dispatch({ type : "REMOVE_CHECKOUT_ADDRESS"});
       toast.success("Address Deleted Successfully");
     } catch (error) {
       dispatch({
