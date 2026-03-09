@@ -8,7 +8,7 @@ import AddressList from "./AddressList";
 import { useSelector } from "react-redux";
 const AddressInfo = ({ address }) => {
   const [openAddressModal, setOpenAddressModal] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const addNewAddressHandler = () => {
     setSelectedAddress("");
     setOpenAddressModal(true);
@@ -70,7 +70,7 @@ const AddressInfo = ({ address }) => {
 
       <AddressInfoModal open={openAddressModal} setOpen={setOpenAddressModal}>
         <AddAddressForm
-          addresses={selectedAddress}
+          address={selectedAddress}
           setOpenAddressModal={setOpenAddressModal}
         />
       </AddressInfoModal>

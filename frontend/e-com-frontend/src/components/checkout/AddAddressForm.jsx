@@ -1,16 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { InputField } from "../shared/InputField";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FaAddressCard } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import {addUpdateUserAddress} from '../../store/actions/index';
-import {toast} from 'react-hot-toast';
-import {Spinners} from '../shared/Spinners';
-const AddAddressForm = ({address,setOpenAddressModal}) => {
+import { addUpdateUserAddress } from "../../store/actions/index";
+import { toast } from "react-hot-toast";
+import { Spinners } from "../shared/Spinners";
+const AddAddressForm = ({ address, setOpenAddressModal }) => {
   const { btnLoader } = useSelector((state) => state.errors);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,27 +19,41 @@ const AddAddressForm = ({address,setOpenAddressModal}) => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: "onTouched",
   });
 
   const onSaveAddressHandler = async (data) => {
-    console.log("Save Address Clicked");
-    dispatch(addUpdateUserAddress(
-        data,
-        toast,
-        address?.addressId,
-        setOpenAddressModal
-    ))
+      dispatch(
+        addUpdateUserAddress(
+          data,
+          toast,
+          address?.addressId,
+          setOpenAddressModal,
+        ),
+      );
   };
+
+  useEffect(()=>{
+    if(address?.addressId){
+      setValue("buildingName", address?.buildingName);
+      setValue("city", address?.city);
+      setValue("street", address?.street);
+      setValue("state", address?.state);
+      setValue("pincode", address?.pincode);
+      setValue("country", address?.country);
+    }
+
+  },[address]);
 
   return (
     <div className="min-h-[calc(100vh-64px)] flex justify-center items-center bg-white">
       <form onSubmit={handleSubmit(onSaveAddressHandler)}>
         <div className="flex justify-center items-center mb-4 font-semibold text-2xl text-slate-800 py-2 px-4">
           <FaAddressCard className="mr-2 text-2xl" />
-          Add Address
+          {!address?.addressId ? "Add Address" :"Update Address"}
         </div>
         <div className="flex flex-col gap-4">
           <InputField
@@ -92,7 +106,7 @@ const AddAddressForm = ({address,setOpenAddressModal}) => {
             errors={errors}
             placeholder="Enter Your Country"
           />
-            <InputField
+          <InputField
             message="*State is required"
             label="state"
             required
@@ -102,7 +116,11 @@ const AddAddressForm = ({address,setOpenAddressModal}) => {
             errors={errors}
             placeholder="Enter Your State"
           />
-          <button disabled={btnLoader} className=" text-white bg-custom-blue px-4 py-2" type="submit">
+          <button
+            disabled={btnLoader}
+            className=" text-white bg-custom-blue px-4 py-2"
+            type="submit"
+          >
             {btnLoader ? (
               <>
                 <Spinners /> Loading...
