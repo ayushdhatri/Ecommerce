@@ -146,7 +146,7 @@ export const addUpdateUserAddress =
     dispatch({ type: "BUTTON_LOADER" });
     try {
       if (addressId) {
-        console.log("We are sending an update for address id ", addressId)
+        console.log("We are sending an update for address id ", addressId);
         const { data } = await api.put(`/addresses/${addressId}`, sendData);
         console.log(data);
       } else {
@@ -189,6 +189,26 @@ export const selectUserCheckoutAddress = (address) => (dispatch) => {
     payload: address,
   });
 };
+
+export const deleteUserAddress =
+  (toast, addressId, setOpenDeleteModal) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: "BUTTON_LOADER" });
+      console.log("Deleting the address from User");
+      await api.delete(`/addresses/${addressId}`);
+      dispatch(getUserAddresses());
+      toast.success("Address Deleted Successfully");
+    } catch (error) {
+      dispatch({
+        type: "IS_ERROR",
+        PAYLOAD:
+          error?.response?.data?.message || "Failed to fetch user's address",
+      });
+    } finally {
+      setOpenDeleteModal(false);
+    }
+  };
+
 export default {
   fetchProducts,
   addToCart,

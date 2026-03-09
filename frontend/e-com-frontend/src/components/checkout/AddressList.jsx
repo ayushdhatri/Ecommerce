@@ -7,6 +7,7 @@ const AddressList = ({
   addresses,
   setSelectedAddress,
   setOpenAddressModal,
+  setOpenDeleteModal
 }) => {
   const dispatch = useDispatch();
   const {selectedUserCheckoutAddress} = useSelector((state)=> state.auth);
@@ -20,6 +21,7 @@ const AddressList = ({
   };
   const onDeleteButtonHandler = (addresses) => {
     setSelectedAddress(addresses);
+    setOpenDeleteModal(true);
   };
 
   return (

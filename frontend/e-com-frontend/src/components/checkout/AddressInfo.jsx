@@ -5,14 +5,26 @@ import { useState } from "react";
 import AddressInfoModal from "./AddressInfoModal";
 import AddAddressForm from "./AddAddressForm";
 import AddressList from "./AddressList";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {DeleteModal} from './DeleteModal';
+import {deleteUserAddress} from '../../store/actions/index';
+import {toast} from 'react-hot-toast';
 const AddressInfo = ({ address }) => {
   const [openAddressModal, setOpenAddressModal] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [openDeleteModal,setOpenDeleteModal] = useState(false);
+  const dispatch = useDispatch();
   const addNewAddressHandler = () => {
     setSelectedAddress("");
     setOpenAddressModal(true);
   };
+  const deleteAddressHandler = ()=>{
+    dispatch(deleteUserAddress(
+      toast,
+      selectedAddress?.addressId,
+      setOpenDeleteModal
+    ))
+  }
   const noAddressExist = !address || address.length === 0;
   const { isLoading, btnLoader } = useSelector((state) => state.errors);
   return (
@@ -50,6 +62,7 @@ const AddressInfo = ({ address }) => {
                     addresses={address}
                     setSelectedAddress={setSelectedAddress}
                     setOpenAddressModal={setOpenAddressModal}
+                    setOpenDeleteModal={setOpenDeleteModal}
                   />
                 </div>
                 {address.length > 0 && (
@@ -74,6 +87,13 @@ const AddressInfo = ({ address }) => {
           setOpenAddressModal={setOpenAddressModal}
         />
       </AddressInfoModal>
+      <DeleteModal
+        open={openDeleteModal}
+        loader = {btnLoader}
+        setOpen = {setOpenDeleteModal}
+        title = "Delete Address"
+        onDeleteHandler={deleteAddressHandler}
+      />
     </div>
   );
 };
