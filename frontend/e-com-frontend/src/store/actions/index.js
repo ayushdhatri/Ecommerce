@@ -131,11 +131,11 @@ export const registerNewUser =
       setLoader(false);
     }
   };
-export const logOutUser = (navigate, toast) => async (dispatch) => {
+export const logOutUser = (navigate, toast) => (dispatch) => {
   dispatch({ type: "LOG_OUT" });
   localStorage.removeItem("auth");
   toast.success("Logout Successfully");
-  navigate("/login");
+  navigate('/login');
 };
 
 export const addUpdateUserAddress =
