@@ -145,7 +145,8 @@ export const addUpdateUserAddress =
     const { user } = getState().auth;
     dispatch({ type: "BUTTON_LOADER" });
     try {
-      if (!addressId) {
+      if (addressId) {
+        console.log("We are sending an update for address id ", addressId)
         const { data } = await api.put(`/addresses/${addressId}`, sendData);
         console.log(data);
       } else {
