@@ -9,8 +9,9 @@ import { getUserAddresses } from "../../store/actions/index";
 import { useEffect } from "react";
 import { Button } from "@mui/material";
 import { toast } from "react-hot-toast";
-import Skeleton from '../shared/Skeleton';
-import PaymentMethod from './PaymentMethod';
+import Skeleton from "../shared/Skeleton";
+import PaymentMethod from "./PaymentMethod";
+import OrderSummary  from "./OrderSummary";
 export const Checkout = () => {
   const [activeStep, setActiveState] = useState(0);
   const dispatch = useDispatch();
@@ -19,7 +20,8 @@ export const Checkout = () => {
   );
   const steps = ["Address", "Payment Method", "Order summary", "Payment"];
   const { isLoading, errorMessage } = useSelector((state) => state.errors);
-  const paymentMethod = false;
+  const { paymentMethod } = useSelector((state)=> state.payment);
+  const {cart, totalPrice} = useSelector((state) => state.carts);
   const handleBack = () => {
     setActiveState((prevStep) => prevStep - 1);
   };
@@ -50,12 +52,13 @@ export const Checkout = () => {
       </Stepper>
       {isLoading ? (
         <div className="lg:w-[80%] mx-auto py-5">
-        <Skeleton />
+          <Skeleton />
         </div>
       ) : (
         <div className="mt-5">
           {activeStep === 0 && <AddressInfo address={address} />}
           {activeStep === 1 && <PaymentMethod />}
+          {activeStep === 2 && <OrderSummary  totalPrice = {totalPrice} cart = {cart} address = {selectedUserCheckoutAddress} paymentMethod={paymentMethod} />}
         </div>
       )}
 
