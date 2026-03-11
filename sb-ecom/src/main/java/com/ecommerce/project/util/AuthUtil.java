@@ -9,24 +9,25 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.security.Security;
+
 @Component
 public class AuthUtil {
 
     @Autowired
     UserRepository userRepository;
 
-    public String loggedInEmail(){
+    public User getAuthenticationDetails(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUserName(authentication.getName())
-                .orElseThrow(() -> new UsernameNotFoundException("User not Found with user id" + authentication.getName()));
+        return userRepository.findByUserName(authentication.getName()).orElseThrow(()->new UsernameNotFoundException("User not Found with User Name:" + authentication.getName()));
+    }
+    public String loggedInEmail(){
+        User user = getAuthenticationDetails();
         return user.getEmail();
     }
 
     public User loggedInUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUserName(authentication.getName())
-                .orElseThrow(()-> new UsernameNotFoundException("User not Found with user id" + authentication.getName()));
-        return user;
+        return getAuthenticationDetails();
     }
 
 }
