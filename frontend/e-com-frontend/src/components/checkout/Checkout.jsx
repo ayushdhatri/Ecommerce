@@ -12,6 +12,7 @@ import { toast } from "react-hot-toast";
 import Skeleton from "../shared/Skeleton";
 import PaymentMethod from "./PaymentMethod";
 import OrderSummary  from "./OrderSummary";
+import StripePayment from './StripePayment';
 export const Checkout = () => {
   const [activeStep, setActiveState] = useState(0);
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ export const Checkout = () => {
           {activeStep === 0 && <AddressInfo address={address} />}
           {activeStep === 1 && <PaymentMethod />}
           {activeStep === 2 && <OrderSummary  totalPrice = {totalPrice} cart = {cart} address = {selectedUserCheckoutAddress} paymentMethod={paymentMethod} />}
+          {activeStep === 3 && <StripePayment />}
         </div>
       )}
 

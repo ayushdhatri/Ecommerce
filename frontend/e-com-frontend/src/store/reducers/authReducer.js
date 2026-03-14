@@ -33,6 +33,11 @@ export const authReducer = (state = initialState, action)=>{
                 ...state,
                 selectedUserCheckoutAddress : action.payload
             }
+        case "CLIENT_SECRET" :
+            return {
+                ...state,
+                clientSecret : action.payload
+            }
 
         default : 
             return state;        

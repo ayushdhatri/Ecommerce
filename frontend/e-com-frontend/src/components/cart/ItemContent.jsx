@@ -7,7 +7,7 @@ import {
   decreaseCartQuantity,
   removeFromCart
 } from "../../store/actions/index";
-import formatPrice from '../../utils/formatPrice';
+import {formatPrice} from '../../utils/formatPrice';
 
 import { toast } from "react-hot-toast";
 const ItemContent = ({

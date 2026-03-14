@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useState } from "react";
+import Skeleton from '../shared/Skeleton';
 import {
   useStripe,
   useElements,

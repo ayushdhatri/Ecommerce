@@ -123,6 +123,7 @@ public class CartServiceImpl implements CartService{
 
         userCartDTO.setCartId(userCart.getCartId());
         userCartDTO.setProducts(productDTOS);
+        userCartDTO.setTotalPrice(userCart.getTotalPrice());
         return userCartDTO;
 
     }
@@ -234,6 +235,7 @@ public class CartServiceImpl implements CartService{
             cartItem.setQuantity(quantity);
             cartItem.setProduct(product);
             cartItem.setDiscount(product.getDiscount());
+            cartItem.setCart(existingCart);
             cartItemRepository.save(cartItem);
         }
 

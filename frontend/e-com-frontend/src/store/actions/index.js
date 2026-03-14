@@ -225,6 +225,7 @@ export const createUserCart = (sendCartItems) => async (dispatch, getState) => {
     await api.post('/cart/create',sendCartItems);
     await dispatch(getUserCart());
     dispatch({ type: "IS_SUCCESS" });
+    console.log("Successfully created cart at backend");
   } catch (error) {
     dispatch({
       type: "IS_ERROR",
@@ -238,11 +239,13 @@ export const getUserCart = () => async (dispatch, getState)=>{
     try {
         dispatch({type : "IS_FETCHING"});
         const { data } = await api.get('/user/cart');
+        console.log(data);
         dispatch({type : "GET_USER_CART_PRODUCTS",
             payload : data.products,
             totalPrice : data.totalPrice,
             cartId : data.cartId
         });
+        console.log("Fetching UserCart detils and price is " + data.totalPrice);
         localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
         dispatch({type : "IS_SUCCESS"});
 
@@ -254,6 +257,28 @@ export const getUserCart = () => async (dispatch, getState)=>{
             payload : error?.response?.data?.message || "Failed to create Fetch Cart Items"
         });
     }
+}
+
+export const createStripePaymentSecret = (totalPrice) => async (dispatch, getState) => {
+    try{
+        dispatch({type : "IS_FETCHING"});
+        const sendData = {
+            "amount" : Number(totalPrice) * 100,
+            "currency" : 'inr'
+        };
+        const {data} = await api.post('/order/stripe-client-secret', sendData);
+        console.log("stripe publishable data" + data);
+
+        dispatch({type : "CLIENT_SECRET", payload : data});
+        localStorage.setItem("client-secret", JSON.stringify(data));
+        dispatch({type : "IS_SUCCESS"})
+    }
+    catch(error){
+        console.log(error);
+
+
+    }
+
 }
 
 

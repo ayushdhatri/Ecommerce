@@ -6,7 +6,7 @@ export const formatPrice = (amount) => {
 }
 
 
-export const formatPriceCalculation = (quantity, price) => {
+export  const formatPriceCalculation = (quantity, price) => {
    return (Number(quantity) * Number(price)).toFixed(2);
   }
 
@@ -22,3 +22,9 @@ export const formatRevenue = (value) => {
       return value;
    }
 };
+
+export default {
+    formatPrice,
+    formatPriceCalculation,
+    formatRevenue
+}
