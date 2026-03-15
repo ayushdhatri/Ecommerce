@@ -15,6 +15,7 @@ import { Login } from "./components/auth/Login";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { Register } from "./components/auth/Register";
 import { Checkout } from "./components/checkout/Checkout";
+import { PaymentConfirmation } from './components/checkout/PaymentConfirmation';
 function App() {
   const [count, setCount] = useState(0);
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/" element={<PrivateRoute />}>
             <Route path="/checkout" element={<Checkout />} />
+            <Route path='/order-confirm' element={<PaymentConfirmation />} />
           </Route>
 
           <Route path="/" element={<PrivateRoute publicPage />}>

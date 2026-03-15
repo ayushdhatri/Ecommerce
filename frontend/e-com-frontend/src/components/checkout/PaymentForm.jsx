@@ -14,7 +14,24 @@ export default function PaymentForm({ clientSecret, totalPrice }) {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (e) => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if( !stripe || !elements){
+        return;
+    }
+    const {error : submitError} = await elements.submit();
+    const { error } = await stripe.confirmPayment({
+        elements,
+        clientSecret,
+        confirmParams :{
+            return_url : `${import.meta.env.VITE_FRONTEND_URL}/order-confirm`,
+        }
+    });
+    if(error){
+        setErrorMessage(error.message);
+        return false;
+    }
+  };
   const paymentElementOptions = {
     layout: "tabs",
   };
@@ -30,7 +47,7 @@ export default function PaymentForm({ clientSecret, totalPrice }) {
             <div className="text-red-500 mt-2">{errorMessage}</div>
           )}
 
-          <button disabled = {!stripe || loading}>
+          <button className="text-white w-full px-5 py-[10px] bg-black mt-2 rounded-md font-blodl disabled:opacity-50 disabled:animate-pulse " disabled = {!stripe || loading}>
                 {!loading ? `Pay $${Number(totalPrice).toFixed(2)}` : "Processing"}
           </button>
         </>
